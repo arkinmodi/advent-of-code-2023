@@ -1,0 +1,35 @@
+GRADLE = ./gradlew
+
+.PHONY: all
+all: build
+
+.PHONY: lint
+lint: spotless prettier yamllint
+
+.PHONY: build
+build:
+	$(GRADLE) clean assemble
+
+.PHONY: test
+test:
+	$(GRADLE) clean test
+
+.PHONY: run
+run: build
+	java -jar ./build/libs/adventofcode.jar
+
+.PHONY: clean
+clean:
+	$(GRADLE) clean
+
+.PHONY: spotless
+spotless:
+	$(GRADLE) spotlessApply
+
+.PHONY: prettier
+prettier:
+	prettier --write '**/*.{md,yml,yaml}'
+
+.PHONY: yamllint
+yamllint:
+	yamllint --strict .
