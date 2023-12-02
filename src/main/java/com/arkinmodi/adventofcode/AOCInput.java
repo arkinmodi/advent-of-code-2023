@@ -7,9 +7,10 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class AOCInput {
-    public List<String> readInputFile(String filepath) {
-        try (InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(filepath);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+    public List<String> readInputFile(final String filepath) {
+        try (final InputStream is =
+                        ClassLoader.getSystemClassLoader().getResourceAsStream(filepath);
+                final BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             return br.lines().toList();
         } catch (IOException e) {
             throw new RuntimeException("Failed to read file: %s".formatted(filepath));
