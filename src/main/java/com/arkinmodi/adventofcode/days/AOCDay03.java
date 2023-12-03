@@ -2,43 +2,56 @@ package com.arkinmodi.adventofcode.days;
 
 import com.arkinmodi.adventofcode.AOCDay;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class AOCDay03 implements AOCDay {
 
     @Override
     public int part1(final List<String> input) {
         int partNumberSum = 0;
-        int[][] directions = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
+        final List<List<Integer>> directions =
+                List.of(
+                        List.of(1, 0),
+                        List.of(1, 1),
+                        List.of(0, 1),
+                        List.of(-1, 1),
+                        List.of(-1, 0),
+                        List.of(-1, -1),
+                        List.of(0, -1),
+                        List.of(1, -1));
 
-        for (int row = 0; row < input.size(); row++) {
+        // spotless:off
+        record Coordinate(int row, int col) {};
+        // spotless:on
+
+        for (final int row : IntStream.range(0, input.size()).toArray()) {
             for (int end = 0; end < input.get(row).length(); end++) {
                 if (isNumber(input.get(row).charAt(end))) {
-                    int start = end;
-                    while (end < input.get(row).length() && isNumber(input.get(row).charAt(end))) {
-                        end++;
-                    }
-                    int partNumber = Integer.valueOf(input.get(row).substring(start, end));
+                    final int start = end;
+                    end =
+                            IntStream.range(end + 1, input.get(row).length())
+                                    .filter((col) -> !isNumber(input.get(row).charAt(col)))
+                                    .findFirst()
+                                    .orElse(input.get(row).length());
 
-                    boolean isValid = false;
-                    for (int column = start; column < end; column++) {
-                        for (int d = 0; d < directions.length; d++) {
-                            int newRow = row + directions[d][0];
-                            int newColumn = column + directions[d][1];
-                            if (0 <= newRow
-                                    && newRow < input.size()
-                                    && 0 <= newColumn
-                                    && newColumn < input.get(row).length()
-                                    && isSymbol(input.get(newRow).charAt(newColumn))) {
-                                isValid = true;
-                                break;
-                            }
-                            if (isValid) {
-                                break;
-                            }
-                        }
-                    }
+                    // spotless:off
+                    final boolean isValid = IntStream.range(start, end).anyMatch(
+                            (col) -> {
+                                return directions.stream()
+                                    .map((d) -> new Coordinate(row + d.get(0), col + d.get(1)))
+                                    .anyMatch((coord) -> {
+                                        return 0 <= coord.row()
+                                            && coord.row() < input.size()
+                                            && 0 <= coord.col()
+                                            && coord.col() < input.get(row).length()
+                                            && isSymbol(input.get(coord.row()).charAt(coord.col()));
+                                    });
+                            });
+                    // spotless:on
 
+                    final int partNumber = Integer.valueOf(input.get(row).substring(start, end));
                     partNumberSum += isValid ? partNumber : 0;
                 }
             }
@@ -49,48 +62,59 @@ public class AOCDay03 implements AOCDay {
     @Override
     public int part2(final List<String> input) {
         int partNumberSum = 0;
-        int[][] directions = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
-        record Coordinate(int row, int col) {}
-        ;
+        final List<List<Integer>> directions =
+                List.of(
+                        List.of(1, 0),
+                        List.of(1, 1),
+                        List.of(0, 1),
+                        List.of(-1, 1),
+                        List.of(-1, 0),
+                        List.of(-1, -1),
+                        List.of(0, -1),
+                        List.of(1, -1));
 
-        for (int row = 0; row < input.size(); row++) {
-            for (int col = 0; col < input.get(row).length(); col++) {
+        // spotless:off
+        record Coordinate(int row, int col) {};
+        // spotless:on
+
+        for (final int row : IntStream.range(0, input.size()).toArray()) {
+            for (final int col : IntStream.range(0, input.get(row).length()).toArray()) {
                 if (input.get(row).charAt(col) == '*') {
-                    List<Coordinate> visited = new ArrayList<>();
-                    List<Integer> gears = new ArrayList<>();
+                    final List<Coordinate> visited = new ArrayList<>();
 
-                    for (int d = 0; d < directions.length; d++) {
-                        Coordinate coordinate =
-                                new Coordinate(row + directions[d][0], col + directions[d][1]);
+                    // spotless:off
+                    final List<Integer> gears = directions.stream()
+                        .map((d) -> new Coordinate(row + d.get(0), col + d.get(1)))
+                        .filter((coord) -> {
+                            return 0 <= coord.row()
+                                && coord.row() < input.size()
+                                && 0 <= coord.col()
+                                && coord.col() < input.get(row).length()
+                                && isNumber(input.get(coord.row()).charAt(coord.col()))
+                                && !visited.contains(coord);
+                        })
+                        .map((coord) -> {
+                            final int start = IntStream
+                                .range(0, coord.col())
+                                .boxed()
+                                .sorted(Collections.reverseOrder())
+                                .filter((c) -> !isNumber(input.get(coord.row()).charAt(c)))
+                                .findFirst()
+                                .orElse(-1) + 1;
 
-                        if (0 <= coordinate.row()
-                                && coordinate.row() < input.size()
-                                && 0 <= coordinate.col()
-                                && coordinate.col() < input.get(row).length()
-                                && isNumber(input.get(coordinate.row()).charAt(coordinate.col()))
-                                && !visited.contains(coordinate)) {
-                            int start, end;
-                            start = end = coordinate.col();
+                            final int end = IntStream
+                                .range(coord.col(), input.get(coord.row()).length())
+                                .filter((c) -> !isNumber(input.get(coord.row()).charAt(c)))
+                                .findFirst()
+                                .orElse(input.get(row).length());
 
-                            while (start >= 0
-                                    && isNumber(input.get(coordinate.row()).charAt(start))) {
-                                start--;
-                            }
-                            start++;
-                            while (end < input.get(coordinate.row()).length()
-                                    && isNumber(input.get(coordinate.row()).charAt(end))) {
-                                end++;
-                            }
-
-                            gears.add(
-                                    Integer.valueOf(
-                                            input.get(coordinate.row()).substring(start, end)));
-
-                            for (int i = start; i < end; i++) {
-                                visited.add(new Coordinate(coordinate.row(), i));
-                            }
-                        }
-                    }
+                            IntStream.range(start, end).forEach((i) -> {
+                                visited.add(new Coordinate(coord.row(), i));
+                            });
+                            return Integer.valueOf(input.get(coord.row()).substring(start, end));
+                        })
+                        .toList();
+                    // spotless:on
 
                     if (gears.size() == 2) {
                         partNumberSum += gears.stream().reduce(1, (a, b) -> a * b);

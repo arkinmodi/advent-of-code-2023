@@ -22,6 +22,7 @@ dependencies {
 
 spotless {
     java {
+        toggleOffOn()
         importOrder()
         removeUnusedImports()
         googleJavaFormat().aosp().reflowLongStrings()
