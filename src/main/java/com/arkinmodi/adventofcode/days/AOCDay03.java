@@ -14,14 +14,10 @@ public class AOCDay03 implements AOCDay {
         int partNumberSum = 0;
 
         // spotless:off
-        final List<List<Integer>> directions =
-            Stream.of(-1, 0, 1)
-            .map(x ->
-                    Stream.of(-1, 0, 1)
+        final List<List<Integer>> directions = Stream.of(-1, 0, 1)
+            .flatMap(x -> Stream.of(-1, 0, 1)
                     .map(y -> List.of(x, y))
-                    .filter(xy -> xy != List.of(0, 0))
-                    .toList())
-            .flatMap(List::stream)
+                    .filter(xy -> xy != List.of(0, 0)))
             .toList();
 
         record Coordinate(int row, int col) {};
@@ -65,14 +61,10 @@ public class AOCDay03 implements AOCDay {
         int partNumberSum = 0;
 
         // spotless:off
-        final List<List<Integer>> directions =
-            Stream.of(-1, 0, 1)
-            .map(x ->
-                    Stream.of(-1, 0, 1)
+        final List<List<Integer>> directions = Stream.of(-1, 0, 1)
+            .flatMap(x -> Stream.of(-1, 0, 1)
                     .map(y -> List.of(x, y))
-                    .filter(xy -> xy != List.of(0, 0))
-                    .toList())
-            .flatMap(List::stream)
+                    .filter(xy -> xy != List.of(0, 0)))
             .toList();
 
         record Coordinate(int row, int col) {};
