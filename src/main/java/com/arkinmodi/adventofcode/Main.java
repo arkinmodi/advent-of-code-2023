@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String EXAMPLE = "day-03-example.txt";
-        String INPUT = "day-03-input.txt";
-        AOCDay aocDay = new AOCDay03();
+        String EXAMPLE = "day-04-example.txt";
+        String INPUT = "day-04-input.txt";
+        AOCDay aocDay = new AOCDay04();
 
         AOCInput aocInput = new AOCInput();
         List<String> exampleData = aocInput.readInputFile(EXAMPLE);
