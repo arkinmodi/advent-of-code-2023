@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class AOCDay03 implements AOCDay {
 
@@ -14,11 +15,9 @@ public class AOCDay03 implements AOCDay {
 
         // spotless:off
         final List<List<Integer>> directions =
-            IntStream.of(-1, 0, 1)
-            .boxed()
+            Stream.of(-1, 0, 1)
             .map(x ->
-                    IntStream.of(-1, 0, 1)
-                    .boxed()
+                    Stream.of(-1, 0, 1)
                     .map(y -> List.of(x, y))
                     .filter(xy -> xy != List.of(0, 0))
                     .toList())
@@ -67,11 +66,9 @@ public class AOCDay03 implements AOCDay {
 
         // spotless:off
         final List<List<Integer>> directions =
-            IntStream.of(-1, 0, 1)
-            .boxed()
+            Stream.of(-1, 0, 1)
             .map(x ->
-                    IntStream.of(-1, 0, 1)
-                    .boxed()
+                    Stream.of(-1, 0, 1)
                     .map(y -> List.of(x, y))
                     .filter(xy -> xy != List.of(0, 0))
                     .toList())
