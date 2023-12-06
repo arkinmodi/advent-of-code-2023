@@ -1,7 +1,7 @@
 GRADLE = ./gradlew
 
 .PHONY: all
-all: build
+all: run
 
 .PHONY: lint
 lint: spotless prettier yamllint
