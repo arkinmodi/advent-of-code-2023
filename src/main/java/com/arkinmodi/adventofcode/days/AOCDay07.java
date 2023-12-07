@@ -8,19 +8,18 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class AOCDay07 implements AOCDay {
+    private enum TYPE {
+        HIGH_CARD,
+        ONE_PAIR,
+        TWO_PAIR,
+        THREE_OF_A_KIND,
+        FULL_HOUSE,
+        FOUR_OF_A_KIND,
+        FIVE_OF_A_KIND,
+    }
 
     @Override
     public int part1(final List<String> input) {
-        enum TYPE {
-            HIGH_CARD,
-            ONE_PAIR,
-            TWO_PAIR,
-            THREE_OF_A_KIND,
-            FULL_HOUSE,
-            FOUR_OF_A_KIND,
-            FIVE_OF_A_KIND,
-        }
-
         record Hand(String cards, int bid) implements Comparable<Hand> {
             private TYPE getType() {
                 final Map<Character, Integer> count = new HashMap<>();
@@ -93,16 +92,6 @@ public class AOCDay07 implements AOCDay {
 
     @Override
     public int part2(final List<String> input) {
-        enum TYPE {
-            HIGH_CARD,
-            ONE_PAIR,
-            TWO_PAIR,
-            THREE_OF_A_KIND,
-            FULL_HOUSE,
-            FOUR_OF_A_KIND,
-            FIVE_OF_A_KIND,
-        }
-
         record Hand(String cards, int bid) implements Comparable<Hand> {
             private TYPE getType() {
                 final Map<Character, Integer> count = new HashMap<>();
