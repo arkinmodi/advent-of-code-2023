@@ -1,4 +1,5 @@
 GRADLE = ./gradlew
+JAVA_ENABLE_ASSERTS = -ea
 
 .PHONY: all
 all: run
@@ -16,7 +17,7 @@ test:
 
 .PHONY: run
 run: build
-	java -jar ./build/libs/adventofcode.jar
+	java $(JAVA_ENABLE_ASSERTS) -jar ./build/libs/adventofcode.jar
 
 .PHONY: clean
 clean:
