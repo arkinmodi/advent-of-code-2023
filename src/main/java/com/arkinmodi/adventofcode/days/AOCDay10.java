@@ -198,7 +198,6 @@ public class AOCDay10 implements AOCDay {
                     };
                 };
 
-        System.out.println(start);
         final List<DIRECTIONS> startDirs =
                 Arrays.stream(DIRECTIONS.values())
                         .filter(
