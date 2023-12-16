@@ -45,7 +45,7 @@ public class AOCDay16 implements AOCDay {
             energized.add(curr.tile());
 
             final List<Beam> next = getNextBeams(input, curr);
-            next.stream().filter(b -> !visited.contains(b)).forEach(b -> queue.add(b));
+            next.stream().filter(b -> !visited.contains(b)).forEach(queue::add);
         }
         return energized.size();
     }
@@ -65,7 +65,7 @@ public class AOCDay16 implements AOCDay {
                         energized.add(curr.tile());
 
                         final List<Beam> next = getNextBeams(input, curr);
-                        next.stream().filter(b -> !visited.contains(b)).forEach(b -> queue.add(b));
+                        next.stream().filter(b -> !visited.contains(b)).forEach(queue::add);
                     }
                     return energized.size();
                 };
