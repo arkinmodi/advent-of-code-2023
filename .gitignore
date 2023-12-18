@@ -4,6 +4,7 @@
 .project
 .settings
 Snap.*.trc
+bin
 build
 core.*.dmp
 heapdump.*.phd
