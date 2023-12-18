@@ -21,10 +21,6 @@ public class AOCDay17 implements AOCDay {
             this.row = row;
             this.col = col;
         }
-
-        public static List<DIRECTION> cw() {
-            return List.of(UP, RIGHT, DOWN, LEFT);
-        }
     }
 
     private record Position(int row, int col, DIRECTION direction, int travelled) {}
@@ -67,7 +63,7 @@ public class AOCDay17 implements AOCDay {
             }
             visited.add(current.position());
 
-            for (final DIRECTION d : DIRECTION.cw()) {
+            for (final DIRECTION d : DIRECTION.values()) {
                 // cannot travel backwards
                 if (current.position().direction().row + d.row == 0
                         && current.position().direction().col + d.col == 0) {
@@ -129,7 +125,7 @@ public class AOCDay17 implements AOCDay {
             }
             visited.add(current.position());
 
-            for (final DIRECTION d : DIRECTION.cw()) {
+            for (final DIRECTION d : DIRECTION.values()) {
                 // cannot travel backwards
                 if (current.position().direction().row + d.row == 0
                         && current.position().direction().col + d.col == 0) {
