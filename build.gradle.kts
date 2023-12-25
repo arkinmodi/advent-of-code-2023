@@ -1,7 +1,7 @@
 plugins {
-    application
     java
     id("com.diffplug.spotless") version "6.23.3"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
@@ -36,15 +36,9 @@ spotless {
     }
 }
 
-val mainClasspath = "com.arkinmodi.adventofcode.Main"
-
-application {
-    mainClass = mainClasspath
-}
-
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = mainClasspath
+        attributes["Main-Class"] = "com.arkinmodi.adventofcode.Main"
     }
 }
 
