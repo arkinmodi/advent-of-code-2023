@@ -58,12 +58,12 @@ public class AOCDay25 implements AOCDay {
                 }
             }
 
-            final long numPartitions =
+            final long wiresRemaining =
                     edges.stream()
                             .filter(e -> getSubset.apply(e.src()) != getSubset.apply(e.dest()))
                             .count();
 
-            if (numPartitions == WIRES_TO_CUT) {
+            if (wiresRemaining == WIRES_TO_CUT) {
                 return subsets.stream().map(s -> s.size()).reduce(1, (acc, n) -> acc * n);
             }
         }
